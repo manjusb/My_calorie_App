@@ -149,6 +149,10 @@
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
+                // Use __api_key if provided by the environment, otherwise default to an empty string.
+                // The Canvas environment is expected to inject the API key through __api_key.
+                const apiKey = typeof __api_key !== 'undefined' ? __api_key : "";
+
                 const payload = {
                     contents: [
                         {
@@ -166,7 +170,6 @@
                     ],
                 };
 
-                const apiKey = ""; // Canvas will provide this at runtime
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
